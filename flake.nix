@@ -79,10 +79,20 @@
         "aarch64-darwin"
       ];
       flake = {
-        homeModule = import ./modules/default.nix;
+        darwinModule = import ./modules/darwin/default.nix;
+        darwinModules = {
+          default = import ./modules/darwin/default.nix;
+          colemak = import ./modules/darwin/colemak.nix;
+        };
+        homeModule = import ./modules/home/default.nix;
         homeModules = {
-          default = import ./modules/default.nix;
-          colemak = import ./modules/default.nix;
+          default = import ./modules/home/default.nix;
+          colemak = import ./modules/home/default.nix;
+        };
+        nixosModule = import ./modules/nixos/default.nix;
+        nixosModules = {
+          default = import ./modules/nixos/default.nix;
+          colemak = import ./modules/nixos/colemak.nix;
         };
       };
     };
