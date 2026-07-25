@@ -14,7 +14,7 @@ in
 
   config = mkIf cfg.enable {
     # Wayland keyboard layout: Colemak (via xkbcommon input configuration).
-    environment.sessionVariables = {
+    home.sessionVariables = {
       XKB_DEFAULT_LAYOUT = "us";
       XKB_DEFAULT_VARIANT = "colemak";
     };
