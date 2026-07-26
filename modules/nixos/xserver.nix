@@ -12,7 +12,7 @@ in
     description = "Enable Colemak keyboard layout for X11 (GUI).";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && config.services.xserver.enable) {
     # X11 keyboard layout: Colemak.
     services.xserver = {
       xkb.layout = "us";

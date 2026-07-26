@@ -12,7 +12,7 @@ in
     description = "Enable Colemak keybindings for Zed Editor.";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && config.programs.zed-editor.enable) {
     programs.zed-editor.userKeymaps = [
       {
         context = "Editor && vim_mode == helix_normal";

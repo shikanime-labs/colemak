@@ -26,7 +26,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -45,21 +50,23 @@
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       "shikanime.cachix.org-1:OrpjVTH6RzYf2R97IqcTWdLRejF6+XbpFNNZJxKG8Ts="
-      "shikanime-studio.cachix.org-1:KxV6aDFU81wzoR9u6pF1uq0dQbUuKbodOSP8/EJHXO0="
+      "shikanime-studio.cachix.org-1:KxV6aDFU81wzoR9u6pF1uqbodOSP8/EJHXO0="
     ];
   };
 
-  outputs =
-    inputs@{
-      devenv,
-      devlib,
-      flake-parts,
-      git-hooks,
-      treefmt-nix,
-      ...
-    }:
+  outputs = inputs@{
+    devenv,
+    devlib,
+    flake-parts,
+    git-hooks,
+    treefmt-nix,
+    ...
+  }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        ./modules/flake/nixos.nix
+        ./modules/flake/home.nix
+        ./modules/flake/darwin.nix
         devenv.flakeModule
         devlib.flakeModule
         git-hooks.flakeModule
@@ -78,22 +85,5 @@
         "aarch64-linux"
         "aarch64-darwin"
       ];
-      flake = {
-        darwinModule = import ./modules/darwin/default.nix;
-        darwinModules = {
-          default = import ./modules/darwin/default.nix;
-          colemak = import ./modules/darwin/colemak.nix;
-        };
-        homeModule = import ./modules/home/default.nix;
-        homeModules = {
-          default = import ./modules/home/default.nix;
-          colemak = import ./modules/home/default.nix;
-        };
-        nixosModule = import ./modules/nixos/default.nix;
-        nixosModules = {
-          default = import ./modules/nixos/default.nix;
-          colemak = import ./modules/nixos/colemak.nix;
-        };
-      };
     };
 }

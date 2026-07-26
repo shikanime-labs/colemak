@@ -12,7 +12,7 @@ in
     description = "Enable Colemak keybindings for Helix.";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && config.programs.helix.enable) {
     programs.helix.settings = {
       keys.normal = {
         # Core Navigation (NEUI Cluster)

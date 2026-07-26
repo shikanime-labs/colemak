@@ -12,7 +12,7 @@ in
     description = "Enable Colemak keybindings for Neovim.";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && config.programs.neovim.enable) {
     programs.neovim = {
       enable = true;
       initLua = ''
