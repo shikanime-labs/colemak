@@ -14,7 +14,6 @@ in
 
   config = mkIf (cfg.enable && config.programs.neovim.enable) {
     programs.neovim = {
-      enable = true;
       initLua = ''
         -- Core Navigation (NEUI Cluster)
         -- Normal Mode
