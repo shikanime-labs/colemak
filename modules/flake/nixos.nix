@@ -1,22 +1,14 @@
-{ inputs, ... }:
-
-let
-  default = {
-    imports = [
-      ../nixos/default.nix
-      inputs.noctalia-greeter.nixosModules.default
-    ];
-  };
-in
 {
   flake = {
-    # Noctalia Greeter flake module provides the `programs.noctalia-greeter`
-    # option consumed by colemak's greeter subsystem module. It is composed
-    # here so the colemak NixOS modules need only set the option.
-    nixosModule = default;
+    # The `programs.noctalia-greeter` option is provided by the consumer
+    # (e.g. machines imports noctalia-greeter.nixosModules.default). colemak
+    # only configures it via modules/nixos/greeter.nix, so we do NOT import
+    # the greeter flake module here — importing it in both colemak and the
+    # consumer double-defines `programs.noctalia-greeter.package`.
+    nixosModule = import ../nixos/default.nix;
     nixosModules = {
-      default = default;
-      colemak = default;
+      default = import ../nixos/default.nix;
+      colemak = import ../nixos/default.nix;
     };
   };
 }
