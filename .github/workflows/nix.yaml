@@ -37,12 +37,29 @@ jobs:
           app-id: ${{ vars.OPERATOR_APP_ID }}
           permission-contents: read
           private-key: ${{ secrets.OPERATOR_PRIVATE_KEY }}
-      - uses: shikanime-studio/actions/nix/setup@v9
+      # Pin Nix to 2.34.8. The shikanime-studio setup@v9 wrapper floats
+      # cachix/install-nix-action@v31 (currently 2.35.1), whose FOD
+      # narHash verification regresses with devenv's locked nixpkgs fetch
+      # ("public key is not valid"). v31.10.7 ships 2.34.8; install_url
+      # makes the pin explicit and deterministic.
+      # Related: t_de8c05dd
+      - uses: cachix/install-nix-action@v31.10.7
         with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          cachix-name: ${{ inputs['cachix-name'] }}
-          github-token:
+          extra_nix_config: |
+            extra-system-features = kvm
+          github_access_token:
             ${{ steps.createGithubAppToken.outputs.token || secrets.GITHUB_TOKEN
+            }}
+          install_url: https://releases.nixos.org/nix/nix-2.34.8/install
+      - name: Push to Cachix
+        if: ${{ env.HAS_CACHIX != '' }}
+        uses: cachix/cachix-action@v17
+        with:
+          name: ${{ inputs['cachix-name'] }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        env:
+          HAS_CACHIX:
+            ${{ inputs['cachix-name'] != '' && secrets.CACHIX_AUTH_TOKEN != ''
             }}
       - uses: shikanime-studio/actions/checkout@v9
         with:
@@ -77,12 +94,25 @@ jobs:
           app-id: ${{ vars.OPERATOR_APP_ID }}
           permission-contents: read
           private-key: ${{ secrets.OPERATOR_PRIVATE_KEY }}
-      - uses: shikanime-studio/actions/nix/setup@v9
+      # See checks job: pin Nix to 2.34.8.
+      # Related: t_de8c05dd
+      - uses: cachix/install-nix-action@v31.10.7
         with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          cachix-name: ${{ inputs['cachix-name'] }}
-          github-token:
+          extra_nix_config: |
+            extra-system-features = kvm
+          github_access_token:
             ${{ steps.createGithubAppToken.outputs.token || secrets.GITHUB_TOKEN
+            }}
+          install_url: https://releases.nixos.org/nix/nix-2.34.8/install
+      - name: Push to Cachix
+        if: ${{ env.HAS_CACHIX != '' }}
+        uses: cachix/cachix-action@v17
+        with:
+          name: ${{ inputs['cachix-name'] }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        env:
+          HAS_CACHIX:
+            ${{ inputs['cachix-name'] != '' && secrets.CACHIX_AUTH_TOKEN != ''
             }}
       - uses: shikanime-studio/actions/checkout@v9
         with:
@@ -110,11 +140,16 @@ jobs:
           app-id: ${{ vars.OPERATOR_APP_ID }}
           permission-contents: read
           private-key: ${{ secrets.OPERATOR_PRIVATE_KEY }}
-      - uses: shikanime-studio/actions/nix/setup@v9
+      # See checks job: pin Nix to 2.34.8.
+      # Related: t_de8c05dd
+      - uses: cachix/install-nix-action@v31.10.7
         with:
-          github-token:
+          extra_nix_config: |
+            extra-system-features = kvm
+          github_access_token:
             ${{ steps.createGithubAppToken.outputs.token || secrets.GITHUB_TOKEN
             }}
+          install_url: https://releases.nixos.org/nix/nix-2.34.8/install
       - uses: shikanime-studio/actions/checkout@v9
         with:
           github-token:
@@ -138,11 +173,16 @@ jobs:
           app-id: ${{ vars.OPERATOR_APP_ID }}
           permission-contents: read
           private-key: ${{ secrets.OPERATOR_PRIVATE_KEY }}
-      - uses: shikanime-studio/actions/nix/setup@v9
+      # See checks job: pin Nix to 2.34.8.
+      # Related: t_de8c05dd
+      - uses: cachix/install-nix-action@v31.10.7
         with:
-          github-token:
+          extra_nix_config: |
+            extra-system-features = kvm
+          github_access_token:
             ${{ steps.createGithubAppToken.outputs.token || secrets.GITHUB_TOKEN
             }}
+          install_url: https://releases.nixos.org/nix/nix-2.34.8/install
       - uses: shikanime-studio/actions/checkout@v9
         with:
           github-token:
