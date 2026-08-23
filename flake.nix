@@ -49,14 +49,15 @@
     ];
   };
 
-  outputs = inputs@{
-    devenv,
-    devlib,
-    flake-parts,
-    git-hooks,
-    treefmt-nix,
-    ...
-  }:
+  outputs =
+    inputs@{
+      devenv,
+      devlib,
+      flake-parts,
+      git-hooks,
+      treefmt-nix,
+      ...
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./modules/flake/nixos.nix
