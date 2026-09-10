@@ -22,6 +22,9 @@ across Helix, Zed (Helix mode), and Neovim.
 
 - Plain-text capitalized title, no conventional-commit prefix
 - Body with labels: `Design:`, `Related:`, `Closes #`
+- Nix: dotted assignment (`a.b.c = v;`) for a single leaf under a shared
+  parent key; a record literal once two or more keys share the parent, keys
+  sorted
 - Keep Markdown lines wrapped at 80 columns and run `nix fmt` before shipping
 
 
