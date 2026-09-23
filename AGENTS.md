@@ -51,3 +51,11 @@ across Helix, Zed (Helix mode), and Neovim.
 
 *Licensed under Apache-2.0. Maintain cross-platform parity when adding new
 keybindings. Always use worktrees when making changes.*
+
+## Environment
+
+This repository ships a `.envrc` for direnv. Run `direnv allow` once after
+cloning; direnv then loads the Nix flake dev shell automatically on every
+directory change (`.envrc` runs
+`use flake . --accept-flake-config --no-pure-eval`). Without direnv, enter
+the same shell manually with `nix develop`.
