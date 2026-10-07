@@ -121,6 +121,7 @@ jobs:
             }}
       - id: direnv
         uses: shikanime-studio/actions/direnv@a91a9b57c78121e303aa30aea2d8ed2ee03ff45f # v9
+      - env: ${{ fromJSON(steps.direnv.outputs.env) }}
         uses: shikanime-studio/actions/nix/integration@a91a9b57c78121e303aa30aea2d8ed2ee03ff45f # v9
         with:
           name: ${{ matrix.name }}
