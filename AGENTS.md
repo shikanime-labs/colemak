@@ -23,6 +23,9 @@ across Helix, Zed (Helix mode), and Neovim.
 - Plain-text capitalized title, no conventional-commit prefix
 - Body with labels: `Design:`, `Related:`, `Closes #`
 - Keep Markdown lines wrapped at 80 columns and run `nix fmt` before shipping
+- Bot PRs: the reviewer takes the lead — the bot author never acts on
+  review comments, so apply the verdict at review time (merge clean PRs,
+  fix or close broken ones) instead of commenting and waiting.
 
 ## Stack Workflow
 
